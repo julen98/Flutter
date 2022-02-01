@@ -20,11 +20,11 @@ class _ElegirItemState extends State<ElegirItem> {
   final items = [
     'Alertas',
     'Avatars',
-    'Cards - Tarjetas',
-    'Animated Container',
+    'Cards',
+    'Container',
     'Inputs',
-    'Slider - Checks',
-    'Listas y Scroll',
+    'Sliders',
+    'Listas',
   ];
 
   List<Widget> _crearItems() {
@@ -35,7 +35,7 @@ class _ElegirItemState extends State<ElegirItem> {
       final tempWidget = ListTile(
         title: Text(element),
         onTap: () {
-          Navigator.pushNamed(context, 'alert');
+          Navigator.pushNamed(context, element);
         },
         leading: Icon(icons[i], color: Colors.blue),
         trailing: const Icon(Icons.navigate_next, color: Colors.blue),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tarea_navegar/src/pages/about.dart';
 
 class HomePage extends StatefulWidget {
   final String title = 'Home';

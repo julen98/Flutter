@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: getApplicationRoutes(),
       onGenerateRoute: (RouteSettings settings) {
-        print('La ruta no encontrada es ${settings.name}');
         return MaterialPageRoute(builder: (BuildContext builder) => const HomePage());
       },
     );
