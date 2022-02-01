@@ -14,13 +14,15 @@ class InputsPageState extends State<InputsPage> {
   late TextEditingController textControllerBirth = TextEditingController();
   DateTime selectedDate = DateTime.now();
   String _enteredText = '';
+  late String _poder = 'Volar';
+  List<String> _poderes = ['Volar', 'Rayos X', 'Super Aliento', 'Super Fuerza'];
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101));
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -36,7 +38,7 @@ class InputsPageState extends State<InputsPage> {
       super.initState();
       textControllerNombre = TextEditingController();
     }
-    
+
     @override
     // ignore: unused_element
     void dispose() {
@@ -48,8 +50,9 @@ class InputsPageState extends State<InputsPage> {
       appBar: AppBar(
         title: const Text('Sliders'),
       ),
-      body: Padding( 
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+      body: Padding(
+        padding:
+            const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -85,16 +88,15 @@ class InputsPageState extends State<InputsPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Colors.black, width: 1.0)
-                  ),
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0)),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
             ),
             const Divider(),
-            // ------------------------------------ 
+            // ------------------------------------
             // ------------- EMAIL ----------------
             // ------------------------------------
             Align(
@@ -119,16 +121,15 @@ class InputsPageState extends State<InputsPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Colors.black, width: 1.0)
-                  ),
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0)),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
             ),
             const Divider(),
-            // ------------------------------------ 
+            // ------------------------------------
             // ------------ PASSWORD --------------
             // ------------------------------------
             Align(
@@ -153,23 +154,26 @@ class InputsPageState extends State<InputsPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Colors.black, width: 1.0)
-                  ),
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0)),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
             ),
             const Divider(),
-            // ------------------------------------ 
+            // ------------------------------------
             // -------------- FECHA ---------------
             // ------------------------------------
             Align(
               alignment: Alignment.topLeft,
               child: TextFormField(
                 controller: textControllerNombre,
-                onTap: () => showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(1901, 1), lastDate: DateTime.now()),
+                onTap: () => showDatePicker(
+                    context: context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime(1901, 1),
+                    lastDate: DateTime.now()),
                 decoration: InputDecoration(
                   labelText: 'Fecha de nacimiento',
                   icon: const Icon(Icons.calendar_today),
@@ -187,15 +191,31 @@ class InputsPageState extends State<InputsPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Colors.black, width: 1.0)
-                  ),
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0)),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
             ),
             const Divider(),
+            Align(
+              alignment: Alignment.topLeft,
+              child: DropdownButton<String>(
+                value: _poder,
+                onChanged: (newValue) {
+                  setState(() {
+                    _poder = newValue!;
+                  });
+                },
+                items: _poderes.map((location) {
+                  return DropdownMenuItem(
+                    child: Text(location),
+                    value: location,
+                  );
+                }).toList(),
+              ),
+            ),
           ],
         ),
       ),
