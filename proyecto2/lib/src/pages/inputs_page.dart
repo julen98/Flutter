@@ -12,47 +12,27 @@ class InputsPageState extends State<InputsPage> {
   late TextEditingController textControllerEmail = TextEditingController();
   late TextEditingController textControllerPassword = TextEditingController();
   late TextEditingController textControllerBirth = TextEditingController();
-  DateTime selectedDate = DateTime.now();
-  String _enteredText = '';
-  late String _poder = 'Volar';
-  List<String> _poderes = ['Volar', 'Rayos X', 'Super Aliento', 'Super Fuerza'];
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  }
+  DateTime selectedDate = DateTime.now();
+  String _enteredTextNombre = '';
+  String _enteredTextEmail = '';
+  late String _poder = 'Volar';
+  final List<String> _poderes = [
+    'Volar',
+    'Rayos X',
+    'Super Aliento',
+    'Super Fuerza'
+  ];
 
   @override
   Widget build(BuildContext context) {
-    @override
-    // ignore: unused_element
-    void initState() {
-      super.initState();
-      textControllerNombre = TextEditingController();
-    }
-
-    @override
-    // ignore: unused_element
-    void dispose() {
-      textControllerNombre.dispose();
-      super.dispose();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sliders'),
       ),
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 25, right: 25, top: 15, bottom: 15),
+            const EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -64,7 +44,7 @@ class InputsPageState extends State<InputsPage> {
               child: TextFormField(
                 onChanged: (value) {
                   setState(() {
-                    _enteredText = value;
+                    _enteredTextNombre = value;
                   });
                 },
                 controller: textControllerNombre,
@@ -74,7 +54,8 @@ class InputsPageState extends State<InputsPage> {
                   suffixIcon: const Icon(Icons.accessibility),
                   hintText: 'Escribe aquí el nombre...',
                   helperText: 'Solo es el nombre',
-                  counterText: ('Letras: ${_enteredText.length.toString()}'),
+                  counterText:
+                      ('Letras: ${_enteredTextNombre.length.toString()}'),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                     borderSide: const BorderSide(
@@ -102,6 +83,11 @@ class InputsPageState extends State<InputsPage> {
             Align(
               alignment: Alignment.topLeft,
               child: TextFormField(
+                onChanged: (value) {
+                  setState(() {
+                    _enteredTextEmail = value;
+                  });
+                },
                 controller: textControllerEmail,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -136,6 +122,7 @@ class InputsPageState extends State<InputsPage> {
               alignment: Alignment.topLeft,
               child: TextFormField(
                 controller: textControllerPassword,
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   icon: const Icon(Icons.lock),
@@ -168,12 +155,17 @@ class InputsPageState extends State<InputsPage> {
             Align(
               alignment: Alignment.topLeft,
               child: TextFormField(
-                controller: textControllerNombre,
+                controller: textControllerBirth,
                 onTap: () => showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(1901, 1),
-                    lastDate: DateTime.now()),
+                  context: context,
+                  initialDate: selectedDate,
+                  firstDate: DateTime(1901, 1),
+                  lastDate: DateTime.now(),
+                ).then((selectedDate) {
+                  if (selectedDate != null) {
+                    textControllerBirth.text = selectedDate.toString();
+                  }
+                }),
                 decoration: InputDecoration(
                   labelText: 'Fecha de nacimiento',
                   icon: const Icon(Icons.calendar_today),
@@ -191,9 +183,10 @@ class InputsPageState extends State<InputsPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide:
-                          const BorderSide(color: Colors.black, width: 1.0)),
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide:
+                        const BorderSide(color: Colors.black, width: 1.0),
+                  ),
                 ),
                 style: const TextStyle(color: Colors.black),
               ),
@@ -215,6 +208,19 @@ class InputsPageState extends State<InputsPage> {
                   );
                 }).toList(),
               ),
+            ),
+            const Divider(),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text('Nombre es: ${textControllerNombre.text}'),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text('Email: ${textControllerEmail.text}'),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(_poder),
             ),
           ],
         ),
